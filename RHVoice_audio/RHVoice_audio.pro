@@ -21,18 +21,21 @@ CheckPKG(libpulse-simple) {
     DEFINES += WITH_PULSE=1
     SOURCES += pulse.cpp
     HEADERS += pulse.hpp
+    LIBS += -lpulse-simple
 }
 
 CheckPKG(ao) {
     DEFINES += WITH_LIBAO=1
     SOURCES += libao.cpp
     HEADERS += libao.hpp
+    LIBS += -lao
 }
 
 CheckPKG(portaudio-2.0) {
     DEFINES += WITH_PORTAUDIO=1
     SOURCES += portaudio.cpp
     HEADERS += portaudio.hpp
+    LIBS += -lportaudio
 }
 
 unix {

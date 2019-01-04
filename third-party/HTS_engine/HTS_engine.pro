@@ -9,6 +9,8 @@ INCLUDEPATH += ../../include/
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+include(../../pri/Configure.pri)
+
 SOURCES += \
     HTS_vocoder.c \
     HTS_sstream.c \
@@ -18,7 +20,15 @@ SOURCES += \
     HTS_label.c \
     HTS_gstream.c \
     HTS_engine.c \
-    HTS_audio.c \
+    HTS_audio.c
+
+HEADERS += \
+    utils.h \
+    HTS_hidden.h \
+    HTS_engine.h
+
+!isEmpty(ENABLE_MAGE):contains(ENABLE_MAGE, 1) {
+    SOURCES += \
     HTS106_vocoder.c \
     HTS106_sstream.c \
     HTS106_pstream.c \
@@ -29,12 +39,11 @@ SOURCES += \
     HTS106_engine.c \
     HTS106_audio.c
 
-HEADERS += \
-    utils.h \
-    HTS_hidden.h \
-    HTS_engine.h \
+    HEADERS += \
     HTS106_hidden.h \
     HTS106_engine.h
+}
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
