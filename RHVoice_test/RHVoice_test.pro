@@ -3,10 +3,10 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
-INCLUDEPATH += ../third-party/tclap
-INCLUDEPATH += ../third-party/utf8
-INCLUDEPATH += ../third-party/rapidxml
-INCLUDEPATH += ../include
+INCLUDEPATH += $$PWD/../third-party/tclap
+INCLUDEPATH += $$PWD/../third-party/utf8
+INCLUDEPATH += $$PWD/../third-party/rapidxml
+INCLUDEPATH += $$PWD/../include
 
 DEFINES += QT_DEPRECATED_WARNINGS
 

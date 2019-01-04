@@ -3,12 +3,12 @@ QT       -= core gui
 
 TARGET = RHVoice_audio
 TEMPLATE = lib
-INCLUDEPATH += ../include
+INCLUDEPATH += $$PWD/../include
 
 DEFINES += RHVOICE_AUDIO_LIBRARY
 DEFINES += QT_DEPRECATED_WARNINGS
 
-include(../pri/Functions.pri)
+include($$PWD/../pri/Functions.pri)
 
 SOURCES += \
     audio.cpp

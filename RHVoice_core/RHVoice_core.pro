@@ -3,12 +3,12 @@ QT       -= core gui
 TARGET = RHVoice_core
 TEMPLATE = lib
 
-INCLUDEPATH += ../include
-INCLUDEPATH += ../third-party/utf8
-INCLUDEPATH += ../third-party/rapidxml
+INCLUDEPATH += $$PWD/../include
+INCLUDEPATH += $$PWD/../third-party/utf8
+INCLUDEPATH += $$PWD/../third-party/rapidxml
 
-include(../pri/Configure.pri)
-include(../pri/Functions.pri)
+include($$PWD/../pri/Configure.pri)
+include($$PWD/../pri/Functions.pri)
 
 VERSION = 1.1.0
 DEFINES += VERSION=$$Stringify($$VERSION)
@@ -39,7 +39,6 @@ SOURCES += \
     core/phoneme_set.cpp \
     core/path.cpp \
     core/params.cpp \
-    core/mage_hts_engine_impl.cpp \ #!!!
     core/lts.cpp \
     core/limiter.cpp \
     core/language.cpp \
@@ -66,52 +65,15 @@ HEADERS += \
     core/userdict_parser.h \
     core/userdict_parser.g
 
+include($$PWD/../third-party/sonic/sonic.pri)
+include($$PWD/../third-party/HTS_engine/HTS_engine.pri)
+
+!isEmpty(ENABLE_MAGE):contains(ENABLE_MAGE, 1) {
+    SOURCES += core/mage_hts_engine_impl.cpp
+    include($$PWD/../third-party/mage/mage.pri)
+}
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
-}
-
-
-# Sonic
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../third-party/sonic/release/ -lsonic
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../third-party/sonic/debug/ -lsonic
-else:unix: LIBS += -L$$OUT_PWD/../third-party/sonic/ -lsonic
-
-INCLUDEPATH += $$PWD/../third-party/sonic
-DEPENDPATH += $$PWD/../third-party/sonic
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/sonic/release/libsonic.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/sonic/debug/libsonic.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/sonic/release/sonic.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/sonic/debug/sonic.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../third-party/sonic/libsonic.a
-
-# HTS engine
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../third-party/HTS_engine/release/ -lHTS_engine
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../third-party/HTS_engine/debug/ -lHTS_engine
-else:unix: LIBS += -L$$OUT_PWD/../third-party/HTS_engine/ -lHTS_engine
-
-INCLUDEPATH += $$PWD/../third-party/HTS_engine
-DEPENDPATH += $$PWD/../third-party/HTS_engine
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/HTS_engine/release/libHTS_engine.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/HTS_engine/debug/libHTS_engine.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/HTS_engine/release/HTS_engine.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/HTS_engine/debug/HTS_engine.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../third-party/HTS_engine/libHTS_engine.a
-
-# MAGE
-!isEmpty(ENABLE_MAGE):contains(ENABLE_MAGE, 1) {
-    win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../third-party/mage/release/ -lmage
-    else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../third-party/mage/debug/ -lmage
-    else:unix: LIBS += -L$$OUT_PWD/../third-party/mage/ -lmage
-
-    INCLUDEPATH += $$PWD/../third-party/mage
-    DEPENDPATH += $$PWD/../third-party/mage
-
-    win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/mage/release/libmage.a
-    else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/mage/debug/libmage.a
-    else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/mage/release/mage.lib
-    else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../third-party/mage/debug/mage.lib
-    else:unix: PRE_TARGETDEPS += $$OUT_PWD/../third-party/mage/libmage.a
 }

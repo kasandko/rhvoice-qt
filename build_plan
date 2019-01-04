@@ -1,0 +1,25 @@
+общее:
+third-party
+core
+lib
+utils
+[audio=(libpulse-simple ? pulse | ao ? libao | portaudio-2.0 ? portaudio)] ?
+    audio
+    test
+    sd_module
+[giomm-2.4] ?
+    service
+[ADD_INCLUDES=1]
+    include
+
+linux:
+data
+config
+
+win32:
+[SAPI=1]
+    sapi
+[makensis]
+    wininst
+nvda-synthDriver
+data
