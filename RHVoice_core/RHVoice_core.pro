@@ -3,12 +3,18 @@ QT       -= core gui
 TARGET = RHVoice_core
 TEMPLATE = lib
 
-INCLUDEPATH += $$PWD/../include
-INCLUDEPATH += $$PWD/../third-party/utf8
-INCLUDEPATH += $$PWD/../third-party/rapidxml
-
+include($$PWD/../include/RHVoice_include.pri)
+include($$PWD/../third-party/sonic/sonic.pri)
+include($$PWD/../third-party/HTS_engine/HTS_engine.pri)
+include($$PWD/../third-party/utf8/utf8.pri)
+include($$PWD/../third-party/rapidxml/rapidxml.pri)
 include($$PWD/../pri/Configure.pri)
 include($$PWD/../pri/Functions.pri)
+
+!isEmpty(ENABLE_MAGE):contains(ENABLE_MAGE, 1) {
+    SOURCES += core/mage_hts_engine_impl.cpp
+    include($$PWD/../third-party/mage/mage.pri)
+}
 
 VERSION = 1.1.0
 DEFINES += VERSION=$$Stringify($$VERSION)
@@ -64,14 +70,6 @@ SOURCES += \
 HEADERS += \
     core/userdict_parser.h \
     core/userdict_parser.g
-
-include($$PWD/../third-party/sonic/sonic.pri)
-include($$PWD/../third-party/HTS_engine/HTS_engine.pri)
-
-!isEmpty(ENABLE_MAGE):contains(ENABLE_MAGE, 1) {
-    SOURCES += core/mage_hts_engine_impl.cpp
-    include($$PWD/../third-party/mage/mage.pri)
-}
 
 unix {
     target.path = /usr/lib

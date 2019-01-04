@@ -3,10 +3,10 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
-INCLUDEPATH += $$PWD/../third-party/tclap
-INCLUDEPATH += $$PWD/../third-party/utf8
-INCLUDEPATH += $$PWD/../third-party/rapidxml
-INCLUDEPATH += $$PWD/../include
+include($$PWD/../include/RHVoice_include.pri)
+include($$PWD/../third-party/utf8/utf8.pri)
+include($$PWD/../third-party/rapidxml/rapidxml.pri)
+include($$PWD/../third-party/tclap/tclap.pri)
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
